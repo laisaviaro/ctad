@@ -1,0 +1,225 @@
+📌 #117765 – CTC AD | Projeto de Reestruturação do AD
+🔎 Apontamentos em Ordem Cronológica
+📅 14/11/2024 – 17:00 às 21:00 (04:00)
+
+Atendente: Alexandre Forchezatto
+
+Backup de todos os servidores controladores de domínio e servidores do compartimento OCI (Benchmarking).
+
+Alterações em arquivos de configuração do benchmarking para o servidor PRD-INFRA-132.
+
+Após desligamento do srv-domain2, identificados problemas de login no portal.
+
+Localizados arquivos compilados Java com referência direta ao srv-domain2.
+
+Iniciada análise de viabilidade de descompilação dos arquivos.
+
+📅 15/11/2024 – 08:30 às 13:00 (04:30)
+
+Atendente: Alexandre Forchezatto
+
+Testes com softwares descompiladores para reverter a classe AdUtils.class.
+
+Tentativa de alteração da conexão com o servidor srv-domain2.
+
+Biblioteca semelhante localizada no GitHub para análise.
+
+Tentativas sem sucesso.
+
+📅 15/11/2024 – 15:00 às 18:30 (03:30)
+
+Atendente: Alexandre Forchezatto
+
+Novos testes para alteração do IP do AD nos arquivos Java e classes.
+
+Consulta à documentação do JDK 1.6.
+
+Tentativas adicionais com novos descompiladores.
+
+Sem sucesso na alteração.
+
+📅 20/06/2025 – 13:30 às 17:00 (03:30)
+
+Atendente: Laisa Viaro
+
+Criado novo AD na OCI.
+
+Instalados serviços de AD e DNS.
+
+Mapeamento dos DCs ativos e inoperantes.
+
+Remoção forçada de DCs desligados há longo período.
+
+Revisão e reorganização de Sites e Subnets (em andamento).
+
+Validação de replicação SYSVOL.
+
+Identificação de falhas de replicação no INF-AD-004 (fora do intervalo seguro > 60 dias).
+
+Isolamento do servidor INF-AD-004.
+
+Criação do novo DC na OCI (SRV-AD-OCI).
+
+Migração do Entra Connect para PRD-INFRA-132.
+
+📅 21/06/2025 – 09:00 às 14:00 (05:00)
+
+Atendente: Alexandre Forchezatto
+
+Testes e validação do Entra Connect.
+
+Despromoção do INF-AD-004.
+
+Criação do novo DC no Azure (AZURE-AD-001).
+
+Correção de problemas de rede na comunicação entre os novos DCs.
+
+📅 21/06/2025 – 10:30 às 12:00 (01:30)
+
+Atendente: Laisa Viaro
+
+Configuração do serviço de AD, DNS e sincronismo no novo AD do Azure.
+
+Ajustes em Sites e replicação.
+
+📅 25/06/2025 – 14:00 às 15:53 (01:53)
+
+Atendente: Laisa Viaro
+
+Definição de que o DHCP permanecerá no Switch L3.
+
+Validação de entrega de leases.
+
+Início do planejamento para desligamento do DHCP no AD.
+
+Atividades complementares no AD:
+
+Exclusão de domínios DNS sem uso:
+
+canashow.com.br
+
+cienciadacana.com.br
+
+ctcanavieira.com.br
+
+Ajuste das zonas DNS removendo vínculos de DCs descontinuados.
+
+Planilhamento das subnets existentes.
+
+Exportação e armazenamento das informações no SharePoint para rastreabilidade.
+
+📅 06/10/2025 – 08:30 às 09:41 (01:11)
+
+Atendente: Laisa Viaro
+
+Decommission do RODC SRG-DOMAIN
+
+Validação dos DCs ativos via nltest.
+
+Execução de metadata cleanup via ntdsutil.
+
+Validação de replicação (repadmin /replsummary) sem falhas.
+
+Remoção manual do objeto residual no AD Sites and Services.
+
+Limpeza de registros órfãos no DNS (A e SRV).
+
+Validação final no FSSO/FortiGate.
+
+Resultado:
+
+SRG-DOMAIN removido com sucesso.
+
+DCs ativos:
+
+PRD-INFRA-132 (PDC)
+
+SRV-INFRA-30
+
+SRV-AD-OCI
+
+AZURE-AD-001
+
+Sem inconsistências pós remoção.
+
+📅 16/10/2025 – 10:50 às 11:50 (01:00)
+
+Atendente: Laisa Viaro
+
+Revisão Site GENOMICS
+
+Site não possui DC local.
+
+Definido uso preferencial do DC AZURE-AD-001.
+
+Criado Site Link GENOMICS-AZURE com custo reduzido.
+
+Replicações revisadas e sem erros.
+
+Próximos passos:
+
+Validação final das subnets junto ao cliente.
+
+Consolidação dos DCs prioritários por site.
+
+📅 14/02/2026 – 13:40 às 16:33 (02:53)
+
+Atendente: Laisa Viaro
+
+Elevação do Nível Funcional do AD
+
+Janela de manutenção executada com sucesso.
+
+Elevação do nível funcional do domínio e floresta de Windows Server 2008 R2 para Windows Server 2016.
+
+Validações prévias:
+
+repadmin sem erros
+
+SYSVOL íntegro
+
+FSMO/RID Master íntegros
+
+Snapshots preventivos realizados
+
+Ordem executada:
+
+Domain Functional Level → Windows2016Domain
+
+Forest Functional Level → Windows2016Forest
+
+Validações pós-elevação:
+
+Replicação saudável
+
+Serviços essenciais operacionais (NTDS, DNS, KDC, Netlogon, DFSR)
+
+Teste de autenticação validado
+
+Sincronização AD Connect validada
+
+Conectividade com aplicações integrada confirmada
+
+Status:
+Domínio operacional em Windows Server 2016 Functional Level.
+Aguardando testes das aplicações LDAP pelo time interno.
+
+✅ Resumo Executivo da Evolução
+
+Tentativas iniciais de alteração via Java (2024) sem sucesso.
+
+Estratégia migrada para reconstrução estruturada do AD (2025).
+
+Criação de novos DCs em OCI e Azure.
+
+Despromoção e limpeza de DCs legados.
+
+Organização de DNS, Subnets e Sites.
+
+Remoção definitiva de RODC.
+
+Ajustes de topologia e replicação.
+
+Elevação do nível funcional com ambiente estabilizado.
+
+Ambiente consolidado híbrido (On-prem + OCI + Azure).
